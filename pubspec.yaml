@@ -1,0 +1,7 @@
+# pubspec.yaml
+name: mtls
+environment:
+  sdk: '^3.8.0'
+dependencies:
+  # ... other dependencies ...
+  crypto: ^3.0.0 # Use the latest stable version
