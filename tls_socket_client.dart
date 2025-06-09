@@ -4,7 +4,8 @@ import 'dart:convert'; // For utf8 encoding/decoding
 
 void main() async {
   // Define certificate and key paths for the client
-  final clientCertPath = 'certs/client.crt';
+  final clientCertPath = 'certs/client.noext.crt';
+  // originally final clientCertPath = 'certs/client.crt';
   final clientKeyPath = 'certs/client.key';
   final caCertPath = 'certs/ca.crt'; // CA certificate to trust the server's certificate
 
