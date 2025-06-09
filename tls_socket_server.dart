@@ -21,7 +21,8 @@ void main() async {
       ..usePrivateKey(serverKeyPath)
       // Set the client authorities. This tells the server which CA
       // it trusts to sign client certificates. For mTLS, this is crucial.
-      ..setClientAuthorities(caCertPath);
+      ..setClientAuthorities(caCertPath)
+      ..setTrustedCertificates(caCertPath);
 
     // 2. Bind the server to a secure socket port
     final server = await SecureServerSocket.bind(
@@ -53,7 +54,7 @@ void main() async {
 
         // Write a welcome message to the client
         final welcomeMessage = 'Server: Hello, client! Your certificate subject is: ${x509.subject}\n';
-        socket.write(utf8.encode(welcomeMessage));
+        socket.write(welcomeMessage);
 
         // Listen for data from the client
         socket.listen(
@@ -61,7 +62,7 @@ void main() async {
             final message = utf8.decode(data).trim();
             print('  Received from client: "$message"');
             // Echo back the received message
-            socket.write(utf8.encode('Server Echo: "$message"\n'));
+            socket.write('Server Echo: "$message"\n');
           },
           onDone: () {
             print('  Client disconnected.');
@@ -83,6 +84,7 @@ void main() async {
     print('Error starting or running server: $e');
     if (e is HandshakeException) {
       print('TLS Handshake failed. This often indicates a certificate issue (e.g., client did not present a trusted cert).');
+      print('${e.message}');
     } else if (e is TlsException) {
       print('TLS Error: ${e.message}');
     } else if (e is FileSystemException) {

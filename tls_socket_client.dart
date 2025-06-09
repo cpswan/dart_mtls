@@ -23,6 +23,8 @@ void main() async {
       // Set trusted certificates for the server. This tells the client which CA
       // it trusts to sign the server's certificate.
       ..setTrustedCertificates(caCertPath);
+      // Make sure to use TLS 1.3
+      //..minimumTlsProtocolVersion = TlsProtocolVersion.tls1_3;
 
     // 2. Connect to the server using SecureSocket.connect
     print('Connecting to ${serverHost}:${serverPort} with mTLS...');
@@ -67,11 +69,11 @@ void main() async {
 
     // Send messages to the server
     print('Sending a message to the server...');
-    socket.write(utf8.encode('Hello, server from Dart client!\n'));
+    socket.write('Hello, server from Dart client!\n');
     await Future.delayed(Duration(seconds: 1)); // Give server time to respond
 
     print('Sending another message...');
-    socket.write(utf8.encode('How are you today?\n'));
+    socket.write('How are you today?\n');
     await Future.delayed(Duration(seconds: 1));
 
     print('Closing client connection...');
