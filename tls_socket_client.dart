@@ -4,8 +4,12 @@ import 'dart:convert'; // For utf8 encoding/decoding
 
 void main() async {
   // Define certificate and key paths for the client
-  final clientCertPath = 'certs/client.noext.crt';
-  // originally final clientCertPath = 'certs/client.crt';
+  // cert with just Server Auth EKU
+  final clientCertPath = 'certs/client.web.crt';
+  // previously cert with no EKUs
+  // final clientCertPath = 'certs/client.noext.crt';
+  // originally cert with both Server Auth and Client Auth EKUs
+  // final clientCertPath = 'certs/client.crt';
   final clientKeyPath = 'certs/client.key';
   final caCertPath = 'certs/ca.crt'; // CA certificate to trust the server's certificate
 
@@ -24,8 +28,6 @@ void main() async {
       // Set trusted certificates for the server. This tells the client which CA
       // it trusts to sign the server's certificate.
       ..setTrustedCertificates(caCertPath);
-      // Make sure to use TLS 1.3
-      //..minimumTlsProtocolVersion = TlsProtocolVersion.tls1_3;
 
     // 2. Connect to the server using SecureSocket.connect
     print('Connecting to ${serverHost}:${serverPort} with mTLS...');
@@ -95,4 +97,3 @@ void main() async {
     socket?.destroy(); // Ensure socket is destroyed in case of errors
   }
 }
-

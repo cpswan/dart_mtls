@@ -1,7 +1,7 @@
 // tls_socket_server.dart
 import 'dart:io';
-import 'dart:convert'; // For utf8 encoding/decoding
-import 'package:crypto/crypto.dart'; // Import the crypto package
+import 'dart:convert'; // For utf8 decoding
+import 'package:crypto/crypto.dart';
 
 void main() async {
   // Define certificate and key paths
@@ -29,8 +29,8 @@ void main() async {
       serverHost,
       serverPort, // Port for TLS socket
       securityContext,
-      requestClientCertificate: true, // IMPORTANT: Require client certificates for mTLS
-      requireClientCertificate: true, // Also require it, otherwise handshake might proceed without client cert
+      requestClientCertificate: true,  // Request a client cert
+      requireClientCertificate: false, // But don't require it
     );
 
     print('mTLS TLS Socket Server listening on ${server.address.host}:${server.port}');
@@ -95,4 +95,3 @@ void main() async {
     exit(1);
   }
 }
-
